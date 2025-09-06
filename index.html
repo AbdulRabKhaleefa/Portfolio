@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Abdul Rab Khaleefa - My Portfolio</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary-bg: #0f0f0f;
+      --secondary-bg: #1a1a1a;
+      --accent: #3b82f6;
+      --accent-secondary: #8b5cf6;
+      --text-primary: #f8f9fa;
+      --text-secondary: #adb5bd;
+      --card-bg: #2c2c2c;
+      --nav-bg: rgba(15, 15, 15, 0.95);
+      --hero-gradient: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--primary-bg);
+      color: var(--text-primary);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Hero Section for Name */
+    .hero {
+      background: var(--hero-gradient);
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+      padding: 0 1rem;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 900;
+      background: linear-gradient(45deg, var(--accent) 20%, var(--accent-secondary) 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+      animation: fadeInGlow 3s ease-in-out infinite alternate;
+      margin: 0;
+    }
+    @keyframes fadeInGlow {
+      from { opacity: 0.8; }
+      to { opacity: 1; text-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-top: 1rem;
+      max-width: 600px;
+      animation: slideUp 1.5s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Navigation Bar */
+    nav {
+      background: var(--nav-bg);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+      transition: box-shadow 0.3s ease;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 30;
+    }
+    nav:hover {
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--accent);
+      cursor: default;
+      user-select: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-link {
+      position: relative;
+      color: var(--text-primary);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 3px;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+    .nav-link:hover {
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Mobile menu button */
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 1.5rem;
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      backdrop-filter: blur(15px);
+      flex-direction: column;
+      padding: 1rem;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+    }
+    .mobile-menu.show {
+      display: flex;
+    }
+    .mobile-nav-links {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Sections */
+    section {
+      background: var(--secondary-bg);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      transition: background 0.5s ease;
+      border-radius: 12px;
+      max-width: 1200px;
+      margin: 4rem auto 0;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+    }
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center top, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+      z-index: -1;
+      border-radius: 12px;
+    }
+
+    section {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s ease forwards;
+    }
+    section:nth-of-type(even) {
+      animation-delay: 0.2s;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.15), transparent);
+      transition: left 0.5s ease;
+      border-radius: 16px;
+    }
+    .card:hover::before {
+      left: 100%;
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 16px 48px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Skills */
+    .skill {
+      background: linear-gradient(45deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      font-weight: 600;
+    }
+    .skill:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Button */
+    .btn {
+      background: linear-gradient(45deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      color: white;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      display: block;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.6);
+      filter: brightness(1.1);
+    }
+
+    /* Form elements */
+    input, textarea {
+      background: var(--card-bg);
+      border: 1px solid var(--text-secondary);
+      color: var(--text-primary);
+      padding: 1rem;
+      border-radius: 8px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    input::placeholder, textarea::placeholder {
+      color: var(--text-secondary);
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Project links */
+    .project-link {
+      color: var(--accent);
+      transition: color 0.3s ease, transform 0.3s ease;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .project-link:hover {
+      color: var(--accent-secondary);
+      transform: translateX(5px);
+      text-decoration: underline;
+    }
+
+    /* Links */
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: var(--accent-secondary);
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero {
+        height: 50vh;
+        padding: 0 0.5rem;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .nav-links {
+        display: none; /* Hide desktop menu */
+      }
+      .menu-btn {
+        display: block;
+      }
+      
+      section {
+        padding: 5rem 1rem 3rem;
+        margin: 2rem 1rem 0;
+        max-width: none;
+      }
+      
+      .skill-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      
+      .project-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .nav-container {
+        padding: 0 0.5rem;
+      }
+      
+      .nav-logo {
+        font-size: 1.25rem;
+      }
+      
+      input, textarea {
+        font-size: 0.9rem;
+      }
+      
+      .card {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 0.9rem;
+      }
+      
+      section {
+        padding: 4rem 0.5rem 2rem;
+      }
+      
+      .skill {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+      }
+      
+      .card h3 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section for Name -->
+  <div class="hero">
+    <div>
+      <h1>Abdul Rab Khaleefa</h1>
+      <p>Front End Developer | Passionate About Crafting Innovative Web Solutions</p>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="nav-container">
+      <div class="nav-logo">My Portfolio</div>
+      <button class="menu-btn" id="menu-btn">☰</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about" class="nav-link">About Me</a></li>
+        <li><a href="#education" class="nav-link">Education</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#certifications" class="nav-link">Certifications</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-nav-links">
+          <li><a href="#about" class="nav-link">About Me</a></li>
+          <li><a href="#education" class="nav-link">Education</a></li>
+          <li><a href="#experience" class="nav-link">Experience</a></li>
+          <li><a href="#certifications" class="nav-link">Certifications</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- About Me Section -->
+  <section id="about" class="pt-32 pb-16">
+    <div class="max-w-4xl mx-auto text-center px-4">
+      <h2 class="text-5xl font-extrabold mb-6">About Me</h2>
+      <p class="text-lg mb-8 text-secondary leading-relaxed">
+        Motivated Front End Developer skilled in crafting responsive user interfaces using HTML, CSS, JavaScript, and Bootstrap. Strong expertise in DOM manipulation, API integration, and debugging client-side issues. Adept at translating user requirements into clean, scalable code with seamless Git/GitHub integration.
+      </p>
+      <h3 class="text-3xl font-semibold mb-6">Skills</h3>
+      <div class="grid grid-cols-3 md:grid-cols-6 gap-4 skill-grid">
+        <span class="skill">HTML</span>
+        <span class="skill">CSS</span>
+        <span class="skill">JavaScript</span>
+        <span class="skill">React</span>
+        <span class="skill">SpringBoot</span>
+        <span class="skill">SQL</span>
+        <span class="skill">PLSQL</span>
+        <span class="skill">C++</span>
+        <span class="skill">Data Structures</span>
+        <span class="skill">OOPS</span>
+        <span class="skill">Python</span>
+        <span class="skill">Machine Learning</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education" class="pt-24 pb-16">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-5xl font-extrabold text-center mb-10">Education</h2>
+      <div class="grid gap-8">
+        <div class="card">
+          <h3 class="text-2xl font-semibold mb-2">Bachelor of Engineering (BE) in Artificial Intelligence & Machine Learning</h3>
+          <p class="text-secondary mb-3">PDA College of Engineering</p>
+          <p>Completed my BE specializing in Artificial Intelligence and Machine Learning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="pt-24 pb-16">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-5xl font-extrabold text-center mb-10">Experience</h2>
+      <div class="grid gap-8">
+        <div class="card">
+          <h3 class="text-2xl font-semibold mb-2">Junior Web Developer Intern</h3>
+          <p class="text-secondary mb-1">Five7 IT Solutions Pvt Ltd · Internship</p>
+          <p class="text-secondary mb-3">Sep 2024 - Feb 2025 · India · On-site</p>
+          <p>
+            Collaborated with senior developers on various projects, contributing to both front-end and back-end tasks. Involved in debugging and testing to ensure high-quality outputs, and participated in team meetings to align on project goals and timelines.
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="text-2xl font-semibold mb-2">Java Full Stack Development</h3>
+          <p class="text-secondary mb-1">Software Development Course at J Spiders, Rajajinagar, Bangalore</p>
+          <p class="text-secondary mb-3">Started July 2025 - Ongoing</p>
+          <p>Intensive training in Java full stack development including backend and frontend technologies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section id="certifications" class="pt-24 pb-16">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-5xl font-extrabold text-center mb-10">Certifications</h2>
+      <div class="grid gap-8">
+        <div class="card">
+          <h3 class="text-2xl font-semibold mb-2">Machine Learning A-Z</h3>
+          <p>
+            Udemy Certification: 
+            <a href="https://udemy-certificate.s3.amazonaws.com/pdf/UC-0234f14d-ff70-4917-b801-d62f0339e51b.pdf" target="_blank" rel="noopener noreferrer" class="project-link">View Certificate</a>
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="text-2xl font-semibold mb-2">Git & GitHub Crash Course</h3>
+          <p>Create a Repository From Scratch!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="pt-24 pb-16">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-5xl font-extrabold mb-6">Projects</h2>
+      <p class="text-secondary mb-10 text-lg">
+        Here are some of my featured projects. You can update or add new projects here later.
+      </p>
+      <div class="grid md:grid-cols-2 gap-8 project-grid">
+        <div class="card text-left">
+          <h3 class="text-2xl font-semibold mb-3">Project One</h3>
+          <p class="text-secondary mb-4">Description of project one goes here. You can update this later.</p>
+          <a href="#" class="project-link">View Project &rarr;</a>
+        </div>
+        <div class="card text-left">
+          <h3 class="text-2xl font-semibold mb-3">Project Two</h3>
+          <p class="text-secondary mb-4">Description of project two goes here. You can update this later.</p>
+          <a href="#" class="project-link">View Project &rarr;</a>
+        </div>
+        <div class="card text-left">
+          <h3 class="text-2xl font-semibold mb-3">Project Three</h3>
+          <p class="text-secondary mb-4">Description of project three goes here. You can update this later.</p>
+          <a href="#" class="project-link">View Project &rarr;</a>
+        </div>
+        <div class="card text-left">
+          <h3 class="text-2xl font-semibold mb-3">Project Four</h3>
+          <p class="text-secondary mb-4">Description of project four goes here. You can update this later.</p>
+          <a href="#" class="project-link">View Project &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="pt-24 pb-16">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-5xl font-extrabold mb-6">Contact Me</h2>
+      <p class="text-secondary text-lg mb-8">Feel free to reach out for collaborations or opportunities!</p>
+      <p class="mb-4 text-lg">
+        Email: <a href="mailto:ar14khaleefa@gmail.com" class="hover:text-accent-secondary underline">ar14khaleefa@gmail.com</a>
+      </p>
+      <p class="mb-4 text-lg">
+        LinkedIn: <a href="https://www.linkedin.com/in/abdul-rab-khaleefa-36859b2a2/" target="_blank" rel="noopener noreferrer" class="hover:text-accent-secondary underline">linkedin.com/in/abdul-rab-khaleefa-36859b2a2/</a>
+      </p>
+      <p class="mb-4 text-lg">
+        GitHub: <a href="https://github.com/AbdulRabKhaleefa" target="_blank" rel="noopener noreferrer" class="hover:text-accent-secondary underline">github.com/AbdulRabKhaleefa</a>
+      </p>
+      <form class="max-w-lg mx-auto space-y-6" autocomplete="off">
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    // Smooth scrolling with offset for fixed nav
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        const offsetTop = target.offsetTop - 70;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth',
+        });
+      });
+    });
+
+    // Form submission dummy handler
+    document.querySelector('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Thank you for your message! This is a demo form.');
+      e.target.reset();
+    });
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('show');
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('show');
+      });
+    });
+
+    // Animate sections on scroll
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
+</content>
+</create_file>
